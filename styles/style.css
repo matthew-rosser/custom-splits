@@ -1,3 +1,120 @@
 body {
-    font-family: sans-serif;
+    font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+    font-weight: normal;
+    text-align: center;
+}
+
+button {
+    font: inherit;
+}
+
+#homepage {
+    display: block;
+}
+
+#file {
+    display: none;
+}
+
+#upload {
+    border: 4px dashed black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    max-width: 1000px;
+    min-height: 50vh;
+    margin: 0 auto 1rem;
+}
+
+#upload:focus,
+#upload:hover {
+    background-color: #DDDDDD;
+    cursor: pointer;
+}
+
+#upload.drag {
+    background-color: lightgreen;
+}
+
+.navigation {
+    background: none;
+    color: blue;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.navigation:focus,
+.navigation:hover {
+    text-decoration: underline;
+}
+
+#customization {
+    display: none;
+}
+
+#presets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+#metadata {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 1rem;
+    column-gap: 3rem;
+    margin-bottom: 1rem;
+}
+
+.radio-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 1rem;
+    column-gap: 1.5rem;
+}
+
+#split-list {
+    width: min-content;
+    margin: 0 auto 1rem;
+}
+
+#comparison {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.segment-name {
+    text-align: left;
+    padding-right: 3rem;
+    white-space: nowrap;
+}
+
+.time {
+    text-align: right;
+}
+
+.segment-slider {
+    width: 25ch;
+    margin-left: 1em;
+    margin-right: 2rem;
+}
+
+#percent-slider {
+    width: 20ch;
+}
+
+.copied {
+    background-color: lightgreen;
 }

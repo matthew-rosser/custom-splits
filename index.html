@@ -1,13 +1,66 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Custom Splits</title>
-        <script src="scripts/main.js"></script>
+        <script src="scripts/main.js" defer></script>
         <link href="styles/style.css" rel="stylesheet">
     </head>
+
     <body>
-        <h1>Custom Splits</h1>
+        <div id="homepage">
+            <h1>Custom Splits</h1>
+            <h3>A tool for generating LiveSplit speedrun comparisons</h3>
+            <input type="file" id="file">
+            <label for="file" id="upload" tabindex="0">Drop your .lss file here</label>
+            <button id="example" class="navigation">Try an example file</button>
+        </div>
+
+        <div id="customization">
+            <button id="back" class="navigation">Back</button>
+            <div id="metadata">
+                <div class="radio-buttons">
+                    <div>
+                        <input type="radio" id="real" name="method" value="RealTime" checked>
+                        <label for="real">Real Time</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="game" name="method" value="GameTime">
+                        <label for="game">Game Time</label>
+                    </div>
+                </div>
+                <div class="radio-buttons">
+                    <div>
+                        <input type="radio" id="seconds" name="decimal" value="0">
+                        <label for="seconds">Seconds</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="tenths" name="decimal" value="1" checked>
+                        <label for="tenths">Tenths</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="hundredths" name="decimal" value="2">
+                        <label for="hundredths">Hundredths</label>
+                    </div>
+                </div>
+            </div>
+            <div id="presets">
+                <button id="equal">Equal Timesave</button>
+                <button id="balanced">Duration Balanced</button>
+                <button id="pb">Personal Best</button>
+                <button id="sob">Best Segments</button>
+                <button id="percent">5.0%</button>
+                <input type="range" id="percent-slider" min="0" max="250" step="1" value="50">
+            </div>
+            <div id="comparison">
+                <label>Comparison Time:</label>
+                <div id="comparison-time"></div>
+            </div>
+            <table id="split-list"></table>
+            <button id="copy">Copy Comparison</button>
+        </div>
     </body>
 </html>
