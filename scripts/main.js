@@ -62,6 +62,7 @@ example.addEventListener("click", e => {
 back.addEventListener("click", e => {
     homepage.style.display = "block";
     customization.style.display = "none";
+    fileInput.value = null;
 });
 
 equalButton.addEventListener("click", equalTimesave);
@@ -118,7 +119,10 @@ methodButtons.forEach(button => {
 decimalButtons.forEach(button => {
     button.addEventListener("change", e => {
         decimals = parseInt(e.target.value);
-        initializeCustomization(splitsXML);
+        updateSplitTimes();
+        segments.forEach(segment => {
+            segment.slider.step = 10 ** (3 - decimals);
+        });
     });
 });
 
@@ -139,12 +143,13 @@ copy.addEventListener("click", e => {
 function handleFileDrop(files) {
     if (files.length != 1) {
         alert("Must drop a file");
+    } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+            parseXML(reader.result);
+        };
+        reader.readAsText(files[0]);
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-        parseXML(reader.result);
-    };
-    reader.readAsText(files[0]);
 }
 
 function parseXML(xml) {
