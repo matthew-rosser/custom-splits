@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Run version="1.7.0">
+  <Segments>
+    <Segment>
+      <Name>Helgen</Name>
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:00:57.0277901</RealTime>
+          <GameTime>00:00:45.3608155</GameTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:00:55.2765169</RealTime>
+        <GameTime>00:00:44.2098404</GameTime>
+      </BestSegmentTime>
+    </Segment>
+    <Segment>
+      <Name>Shrine</Name>
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:02:37.8715737</RealTime>
+          <GameTime>00:02:20.3541359</GameTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:01:34.8766963</RealTime>
+        <GameTime>00:01:29.7660171</GameTime>
+      </BestSegmentTime>
+    </Segment>
+    <Segment>
+      <Name>Embassy</Name>
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:03:57.0890791</RealTime>
+          <GameTime>00:03:21.1451132</GameTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:01:19.2175054</RealTime>
+        <GameTime>00:01:00.7909773</GameTime>
+      </BestSegmentTime>
+    </Segment>
+    <Segment>
+      <Name>Karthspire</Name>
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:05:12.3287767</RealTime>
+          <GameTime>00:04:24.0726738</GameTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:01:10.5191671</RealTime>
+        <GameTime>00:00:59.3734249</GameTime>
+      </BestSegmentTime>
+    </Segment>
+    <Segment>
+      <Name>Esbern</Name>
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:07:50.8116633</RealTime>
+          <GameTime>00:06:36.9522647</GameTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:02:35.8468086</RealTime>
+        <GameTime>00:02:10.1536970</GameTime>
+      </BestSegmentTime>
+    </Segment>
+    <Segment>
+      <Name>Initiation</Name>
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:09:49.4790548</RealTime>
+          <GameTime>00:08:18.4333705</GameTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:01:52.3762167</RealTime>
+        <GameTime>00:01:35.2273441</GameTime>
+      </BestSegmentTime>
+    </Segment>
+    <Segment>
+      <Name>Mzark</Name>
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:11:23.7038863</RealTime>
+          <GameTime>00:09:37.4155647</GameTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:01:26.9544072</RealTime>
+        <GameTime>00:01:15.0247912</GameTime>
+      </BestSegmentTime>
+    </Segment>
+    <Segment>
+      <Name>Alduin 1</Name>
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:16:05.8314974</RealTime>
+          <GameTime>00:13:54.9235258</GameTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:04:35.8251606</RealTime>
+        <GameTime>00:04:11.4166620</GameTime>
+      </BestSegmentTime>   
+    </Segment>
+    <Segment>
+      <Name>Council</Name>
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:21:50.5874364</RealTime>
+          <GameTime>00:17:25.2880889</GameTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:05:15.3690964</RealTime>
+        <GameTime>00:03:18.6153538</GameTime>
+      </BestSegmentTime>
+    </Segment>
+    <Segment>
+      <Name>Odahviing</Name>
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:23:23.3086274</RealTime>
+          <GameTime>00:18:44.2569481</GameTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:01:31.4187558</RealTime>
+        <GameTime>00:01:18.0638951</GameTime>
+      </BestSegmentTime>
+    </Segment>
+    <Segment>
+      <Name>Skuldafn</Name>
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:23:47.4995482</RealTime>
+          <GameTime>00:19:03.6208109</GameTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:00:17.4244990</RealTime>
+        <GameTime>00:00:13.2439391</GameTime>
+      </BestSegmentTime>
+    </Segment>
+    <Segment>
+      <Name>Alduin 2</Name>
+      <SplitTimes>
+        <SplitTime name="Personal Best">
+          <RealTime>00:26:17.0968812</RealTime>
+          <GameTime>00:21:12.8372872</GameTime>
+        </SplitTime>
+      </SplitTimes>
+      <BestSegmentTime>
+        <RealTime>00:02:29.5973330</RealTime>
+        <GameTime>00:02:09.2164763</GameTime>
+      </BestSegmentTime>
+    </Segment>
+  </Segments>
+</Run>
