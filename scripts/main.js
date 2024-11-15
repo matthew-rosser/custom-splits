@@ -54,7 +54,7 @@ uploadBox.addEventListener("dragover", e => {
 });
 
 example.addEventListener("click", e => {
-    fetch("examples/example.lss")
+    fetch("assets/examples/example.lss")
         .then(res => res.text())
         .then(xml => parseXML(xml));
 });

@@ -1,5 +1,21 @@
+@font-face {
+    font-display: swap;
+    font-family: "Noto Sans";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../assets/fonts/noto-sans-v37-latin-regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-display: swap;
+    font-family: "Noto Sans";
+    font-style: normal;
+    font-weight: 700;
+    src: url("../assets/fonts/noto-sans-v37-latin-700.woff2") format("woff2");
+}
+
 body {
-    font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+    font-family: "Noto Sans", sans-serif;
     font-weight: normal;
     text-align: center;
 }
