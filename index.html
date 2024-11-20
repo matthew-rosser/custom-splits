@@ -13,54 +13,76 @@
     <body>
         <div id="homepage">
             <h1>Custom Splits</h1>
-            <h3>A tool for generating LiveSplit speedrun comparisons</h3>
-            <input type="file" id="file">
+            <h2>A tool for generating LiveSplit speedrun comparisons</h2>
+            <input type="file" id="file" class="hidden">
             <label for="file" id="upload" tabindex="0">Drop your .lss file here</label>
             <button id="example" class="navigation">Try an example file</button>
         </div>
 
-        <div id="customization">
-            <button id="back" class="navigation">Back</button>
-            <div id="metadata">
-                <div class="radio-buttons">
-                    <div>
-                        <input type="radio" id="real" name="method" value="RealTime" checked>
-                        <label for="real">Real Time</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="game" name="method" value="GameTime">
-                        <label for="game">Game Time</label>
-                    </div>
+        <div id="customization" class="hidden">
+            <div class="container">
+                <div class="left-panel">
+                    <button id="back" class="navigation">Back</button>
+                    <fieldset class="radio-buttons">
+                        <legend>Timing Method</legend>
+                        <div>
+                            <input type="radio" id="real" name="method" value="RealTime" checked>
+                            <label for="real">Real Time</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="game" name="method" value="GameTime">
+                            <label for="game">Game Time</label>
+                        </div>
+                    </fieldset>
+                    <fieldset class="radio-buttons">
+                        <legend>Accuracy</legend>
+                        <div>
+                            <input type="radio" id="seconds" name="decimal" value="0">
+                            <label for="seconds">Seconds</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="tenths" name="decimal" value="1" checked>
+                            <label for="tenths">Tenths</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="hundredths" name="decimal" value="2">
+                            <label for="hundredths">Hundredths</label>
+                        </div>
+                    </fieldset>
+                    <fieldset class="radio-buttons">
+                        <legend>Slider Timesave</legend>
+                        <div>
+                            <input type="radio" id="ten" name="timesave" value="10000">
+                            <label for="ten">10 seconds</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="thirty" name="timesave" value="30000" checked>
+                            <label for="thirty">30 seconds</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="sixty" name="timesave" value="60000">
+                            <label for="sixty">60 seconds</label>
+                        </div>
+                    </fieldset>
+                    <fieldset id="presets" class="buttons">
+                        <legend>Presets</legend>
+                        <button id="equal">Equal Timesave</button>
+                        <button id="balanced">Duration Balanced</button>
+                        <button id="percent-button">5.0%</button>
+                        <input type="range" id="percent-slider" min="0" max="250" step="1" value="50">
+                    </fieldset>
+                    <fieldset id="comparisons" class="buttons">
+                        <legend>Comparisons</legend>
+                        <button id="sob">Best Segments</button>
+                    </fieldset>
                 </div>
-                <div class="radio-buttons">
-                    <div>
-                        <input type="radio" id="seconds" name="decimal" value="0">
-                        <label for="seconds">Seconds</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="tenths" name="decimal" value="1" checked>
-                        <label for="tenths">Tenths</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="hundredths" name="decimal" value="2">
-                        <label for="hundredths">Hundredths</label>
-                    </div>
+                <div class="right-panel">
+                    <h3 id="comparison">Comparison Time: <span id="comparison-time"></span></h3>
+                    <div id="split-list"></div>
+                    <button id="copy">Copy Comparison</button>
+                    <div id="copied" class="hidden">Copied!</div>
                 </div>
             </div>
-            <div id="presets">
-                <button id="equal">Equal Timesave</button>
-                <button id="balanced">Duration Balanced</button>
-                <button id="pb">Personal Best</button>
-                <button id="sob">Best Segments</button>
-                <button id="percent">5.0%</button>
-                <input type="range" id="percent-slider" min="0" max="250" step="1" value="50">
-            </div>
-            <div id="comparison">
-                <label>Comparison Time:</label>
-                <div id="comparison-time"></div>
-            </div>
-            <table id="split-list"></table>
-            <button id="copy">Copy Comparison</button>
         </div>
     </body>
 </html>
