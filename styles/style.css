@@ -14,6 +14,29 @@
     src: url("../assets/fonts/noto-sans-v37-latin-700.woff2") format("woff2");
 }
 
+:root {
+    --background-color: #FCFCFC;
+    --background-color-button: #ECECEC;
+    --background-color-darker: #DCDCDC;
+    --text-color: #000000;
+    --accent-color: #009966;
+    --drag-color: #99DD99;
+    --nav-color: #0000FF;
+    color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #1A1A1A;
+        --background-color-button: #2A2A2A;
+        --background-color-darker: #3A3A3A;
+        --text-color: #FFFFFF;
+        --accent-color: #88DD88;
+        --drag-color: #224422;
+        --nav-color: #5FBFFF;
+    }
+}
+
 * {
     font: inherit;
     margin: 0;
@@ -23,6 +46,9 @@ body {
     font-family: "Noto Sans", sans-serif;
     font-weight: 400;
     padding: 1rem;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    accent-color: var(--accent-color);
 }
 
 @media (max-width: 600px) {
@@ -57,7 +83,8 @@ h2, h3 {
 }
 
 #upload {
-    border: 0.25rem dashed black;
+    border: 0.25rem dashed var(--text-color);
+    background-color: var(--background-color-button);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -70,12 +97,12 @@ h2, h3 {
 
 #upload:focus,
 #upload:hover {
-    background-color: #DDDDDD;
+    background-color: var(--background-color-darker);
     cursor: pointer;
 }
 
 #upload.drag {
-    background-color: lightgreen;
+    background-color: var(--drag-color);
 }
 
 button {
@@ -86,7 +113,7 @@ button {
     border: none;
     background: none;
     padding: 0;
-    color: blue;
+    color: var(--nav-color);
     font-size: inherit;
 }
 
@@ -163,5 +190,6 @@ fieldset {
 #copied {
     text-align: center;
     font-size: smaller;
-    color: green;
+    color: var(--accent-color);
+    font-weight: 700;
 }
