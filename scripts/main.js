@@ -4,7 +4,7 @@ const fileInput = document.getElementById("file");
 const uploadBox = document.getElementById("upload");
 const customization = document.getElementById("customization");
 const back = document.getElementById("back");
-const comparisons = document.getElementById("comparisons");
+const comparisonsDiv = document.getElementById("comparisons");
 const balancedButton = document.getElementById("balanced");
 const equalButton = document.getElementById("equal");
 const sobButton = document.getElementById("sob");
@@ -25,9 +25,8 @@ let decimals = 1;
 let comparisonTime = 0;
 let timesave = 30000;
 let splitsXML = null;
-let segments = null;
-let otherComparisons = null;
-let comparisonButtons = [];
+let segments = [];
+let comparisons = [];
 
 fileInput.addEventListener("change", e => {
     handleFileDrop(fileInput.files);
@@ -79,9 +78,13 @@ equalButton.addEventListener("click", equalTimesave);
 balancedButton.addEventListener("click", e => {
     const sob = calculateSumOfBest();
     segments.forEach(segment => {
-        segment.comparisonSegment = segment.bestSegment 
-            + Math.floor((comparisonTime - sob) 
-            * (segment.bestSegment / sob));
+        if (sob == 0) {
+            segment.comparisonSegment = 0;
+        } else {
+            segment.comparisonSegment = segment.bestSegment 
+                + Math.floor((comparisonTime - sob) 
+                * (segment.bestSegment / sob));
+        }
     });
     updateSplitTimes();
 });
@@ -114,7 +117,7 @@ percentSlider.addEventListener("input", e => {
 methodButtons.forEach(button => {
     button.addEventListener("change", e => {
         timingMethod = e.target.value;
-        initializeCustomization(splitsXML);
+        initializeCustomization();
     });
 });
 
@@ -134,13 +137,15 @@ timesaveButtons.forEach(button => {
         segments.forEach(segment => { 
             segment.slider.max = segment.bestSegment + timesave;
         });
+        updateSplitTimes();
     });
 });
 
 copy.addEventListener("click", e => {
     let comparison = "";
     segments.forEach(segment => {
-        comparison += time(segment.splitTime, decimals) + "\n";
+        const time = segment.splitTimeDiv.textContent;
+        comparison += time == "-" ? "\n" : time + "\n";
     });
     navigator.clipboard.writeText(comparison);
     copied.classList.remove("hidden");
@@ -163,98 +168,85 @@ function handleFileDrop(files) {
 
 function parseXML(xml) {
     const parser = new DOMParser();
-    const splits = parser.parseFromString(xml, "text/xml");
-    if (splits.querySelector("parsererror")) {
+    splitsXML = parser.parseFromString(xml, "text/xml");
+    if (splitsXML.querySelector("parsererror")) {
         alert("Could not parse file as XML");
     } else {
-        // if (splits.querySelector("GameTime")) {
-        //     timingMethod = "GameTime";
-        //     game.checked = true;
-        //     real.checked = false;
-        // }
-        initializeCustomization(splits);
+        initializeCustomization();
     }
 }
 
-function initializeCustomization(splits) {
+function initializeCustomization() {
     homepage.classList.add("hidden");
     customization.classList.remove("hidden");
 
-    if (splits) {
-        comparisonDiv.innerHTML = "";
-        splitsXML = splits;
-        segments = [];
-        otherComparisons = new Set();
-        splitList.innerHTML = "";
-        let lastSplitTimes = null;
-        comparisonButtons.forEach(button => {
-            button.remove();
-        });
-        comparisonButtons = [];
+    comparisonDiv.innerHTML = "";
+    segments = [];
+    splitList.innerHTML = "";
+    comparisons.forEach(comparison => {
+        comparison.button.remove();
+    });
+    comparisons = [];
 
-        const segmentXMLs = splits.querySelectorAll("Segment");
-        segmentXMLs.forEach(segmentXML => {
-            const segment = new Segment(segmentXML, decimals, timesave, timingMethod);
+    const segmentXMLs = splitsXML.querySelectorAll("Segment");
+    segmentXMLs.forEach(segmentXML => {
+        const segment = new Segment(segmentXML, decimals, timesave, timingMethod);
 
-            const splitTimeXMLs = segmentXML.querySelectorAll("SplitTime");
-            const splitTimes = new Map();
-            splitTimeXMLs.forEach(splitTimeXML => {
+        const splitTimeXMLs = segmentXML.querySelectorAll("SplitTime");
+        splitTimeXMLs.forEach(splitTimeXML => {
 
-                const comparisonName = splitTimeXML.getAttribute("name");
-                otherComparisons.add(comparisonName);
-
-                const comparisonSplitTime = 
-                    ms(splitTimeXML.querySelector(timingMethod).textContent);
-                splitTimes.set(comparisonName, comparisonSplitTime);
-
-                if (lastSplitTimes) {
-                    segment.otherSegments.set(comparisonName, 
-                        comparisonSplitTime - lastSplitTimes.get(comparisonName));
-                } else {
-                    segment.otherSegments.set(comparisonName, comparisonSplitTime);
+            const comparisonName = splitTimeXML.getAttribute("name");
+            let comparison = null;
+            for (let i = 0; i < comparisons.length; i++) {
+                if (comparisons[i].name === comparisonName) {
+                    comparison = comparisons[i];
+                    break;
                 }
-            });
+            }
+            if (comparison == null) {
+                comparison = new Comparison(comparisonName);
+                comparisons.push(comparison);
+            }
 
-            lastSplitTimes = splitTimes;
-            
-            segment.initializeSlider(updateSplitTimes);
-            segments.push(segment);
-            splitList.appendChild(segment.nameDiv);
-            splitList.appendChild(segment.comparisonDiv);
-            splitList.appendChild(segment.slider);
-            splitList.appendChild(segment.splitTimeDiv);
+            const timeXML = splitTimeXML.querySelector(timingMethod);
+            if (timeXML) {
+                comparison.splitTimes.push(ms(timeXML.textContent));
+            } else {
+                comparison.splitTimes.push(null);
+            }
         });
+        
+        segment.initializeSlider(updateSplitTimes);
+        segments.push(segment);
+        splitList.appendChild(segment.nameDiv);
+        splitList.appendChild(segment.comparisonDiv);
+        splitList.appendChild(segment.slider);
+        splitList.appendChild(segment.splitTimeDiv);
+    });
 
-        comparisonTime = lastSplitTimes.get("Personal Best");
-
-        for (const comparisonName of otherComparisons) {
-            const button = document.createElement("button");
-            button.innerHTML = comparisonName;
-            button.addEventListener("click", e => {
-                segments.forEach(segment => {
-                    segment.comparisonSegment = segment.otherSegments.get(comparisonName);
-                });
-                updateSplitTimes();
-            });
-            comparisons.appendChild(button);
-            comparisonButtons.push(button);
-        }
-    
-        equalTimesave();
+    if (comparisons.length > 0) {
+        comparisons[0].button.click();
+    } else {
+        sobButton.click();
     }
 }
 
 function updateSplitTimes() {
     let total = 0;
     segments.forEach(segment => {
-        total += segment.comparisonSegment;
-        segment.splitTime = total;
-        segment.splitTimeDiv.textContent = time(segment.splitTime, decimals);
-        segment.comparisonDiv.textContent = time(segment.comparisonSegment, decimals);
-        segment.slider.value = segment.comparisonSegment;
+        if (segment.comparisonSegment == 0) {
+            segment.splitTimeDiv.textContent = "-";
+            segment.comparisonDiv.textContent = "-";
+            segment.slider.value = segment.slider.min;
+        } else {
+            total += segment.comparisonSegment;
+            segment.splitTimeDiv.textContent = time(total);
+            segment.comparisonDiv.textContent = time(segment.comparisonSegment);
+            segment.slider.value = segment.comparisonSegment;
+        }
     });
     comparisonTime = total;
-    comparisonDiv.innerHTML = time(comparisonTime, decimals);
+    comparisonDiv.textContent = time(comparisonTime);
 }
 
 function equalTimesave() {
@@ -342,11 +334,9 @@ function time(ms) {
 class Segment {
 
     // data
-    name;
-    bestSegment;
+    name = "";
+    bestSegment = 0;
     comparisonSegment;
-    otherSegments;
-    splitTime;
 
     // html elements
     nameDiv;
@@ -356,13 +346,19 @@ class Segment {
 
     constructor(xml) {
 
-        this.name = xml.querySelector("Name").textContent;
+        const nameXML = xml.querySelector("Name");
+        if (nameXML) {
+            this.name = nameXML.textContent;
+        }
+
         this.nameDiv = document.createElement("div");
         this.nameDiv.classList.add("segment-name");
         this.nameDiv.textContent = this.name;
 
-        this.bestSegment = 
-            ms(xml.querySelector(`BestSegmentTime > ${timingMethod}`).textContent);
+        const bestSegmentXML = xml.querySelector(`BestSegmentTime > ${timingMethod}`);
+        if (bestSegmentXML) {
+            this.bestSegment = ms(bestSegmentXML.textContent);
+        }
     
         this.comparisonSegment = this.bestSegment;
         this.comparisonDiv = document.createElement("div");
@@ -379,15 +375,39 @@ class Segment {
         this.slider.max = this.bestSegment + timesave;
         this.slider.step = 10 ** (3 - decimals);
         this.slider.value = this.slider.min;
-
-        this.otherSegments = new Map();
     }
 
     initializeSlider(callback) {
         this.slider.addEventListener("input", e => {
             this.comparisonSegment = parseInt(this.slider.value);
-            this.comparisonDiv.textContent = time(this.comparisonSegment, decimals);
+            this.comparisonDiv.textContent = time(this.comparisonSegment);
             callback();
         });
+    }
+}
+
+class Comparison {
+
+    splitTimes = [];
+    name;
+    button;
+
+    constructor(name) {
+        this.name = name
+        this.button = document.createElement("button");
+        this.button.innerHTML = this.name;
+        this.button.addEventListener("click", e => {
+            let lastSplitTime = 0;
+            for (let i = 0; i < segments.length; i++) {
+                if (this.splitTimes[i]) {
+                    segments[i].comparisonSegment = this.splitTimes[i] - lastSplitTime;
+                    lastSplitTime = this.splitTimes[i];
+                } else {
+                    segments[i].comparisonSegment = 0;
+                }
+            }
+            updateSplitTimes();
+        });
+        comparisonsDiv.appendChild(this.button);
     }
 }
