@@ -7,6 +7,8 @@ const back = document.getElementById("back");
 const comparisonsDiv = document.getElementById("comparisons");
 const balancedButton = document.getElementById("balanced");
 const equalButton = document.getElementById("equal");
+const maxButton = document.getElementById("max");
+const minButton = document.getElementById("min");
 const sobButton = document.getElementById("sob");
 const percentButton = document.getElementById("percent-button");
 const percentSlider = document.getElementById("percent-slider");
@@ -21,7 +23,7 @@ const copy = document.getElementById("copy");
 const copied = document.getElementById("copied");
 
 let timingMethod = "RealTime";
-let decimals = 1;
+let decimals = 2;
 let comparisonTime = 0;
 let timesave = 30000;
 let splitsXML = null;
@@ -73,7 +75,14 @@ back.addEventListener("click", e => {
     timingMethod = "RealTime";
 });
 
-equalButton.addEventListener("click", equalTimesave);
+equalButton.addEventListener("click", e => {
+    const sob = calculateSumOfBest();
+    segments.forEach(segment => {
+        segment.comparisonSegment = segment.bestSegment 
+            + Math.floor((comparisonTime - sob) / segments.length);
+    });
+    updateSplitTimes();
+});
 
 balancedButton.addEventListener("click", e => {
     const sob = calculateSumOfBest();
@@ -86,6 +95,25 @@ balancedButton.addEventListener("click", e => {
                 * (segment.bestSegment / sob));
         }
     });
+    updateSplitTimes();
+});
+
+maxButton.addEventListener("click", e => {
+    segments.forEach(segment => {
+        segment.comparisonSegment = segment.bestSegment;
+    });
+    const sob = calculateSumOfBest();
+    segments[0].comparisonSegment = segments[0].bestSegment + comparisonTime - sob;
+    updateSplitTimes();
+});
+
+minButton.addEventListener("click", e => {
+    segments.forEach(segment => {
+        segment.comparisonSegment = segment.bestSegment;
+    });
+    const sob = calculateSumOfBest();
+    const lastSegment = segments[segments.length - 1];
+    lastSegment.comparisonSegment = lastSegment.bestSegment + comparisonTime - sob;
     updateSplitTimes();
 });
 
@@ -247,15 +275,6 @@ function updateSplitTimes() {
     });
     comparisonTime = total;
     comparisonDiv.textContent = time(comparisonTime);
-}
-
-function equalTimesave() {
-    const sob = calculateSumOfBest();
-    segments.forEach(segment => {
-        segment.comparisonSegment = segment.bestSegment 
-            + Math.floor((comparisonTime - sob) / segments.length);
-    });
-    updateSplitTimes();
 }
 
 function percent(percentage) {
