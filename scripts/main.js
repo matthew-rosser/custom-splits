@@ -276,7 +276,7 @@ function updateSplitTimes(finalTime) {
     if (finalTime && finalTime > total) {
         const lastSegment = segments[segments.length - 1];
         lastSegment.comparisonSegment += finalTime - total;
-        lastSegment.splitTimeDiv.textContent = time(total);
+        lastSegment.splitTimeDiv.textContent = time(finalTime);
         lastSegment.comparisonDiv.textContent = time(lastSegment.comparisonSegment);
         lastSegment.slider.value = lastSegment.comparisonSegment;
     } else {
