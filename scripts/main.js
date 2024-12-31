@@ -81,7 +81,7 @@ equalButton.addEventListener("click", e => {
         segment.comparisonSegment = segment.bestSegment 
             + Math.floor((comparisonTime - sob) / segments.length);
     });
-    updateSplitTimes();
+    updateSplitTimes(comparisonTime);
 });
 
 balancedButton.addEventListener("click", e => {
@@ -95,7 +95,7 @@ balancedButton.addEventListener("click", e => {
                 * (segment.bestSegment / sob));
         }
     });
-    updateSplitTimes();
+    updateSplitTimes(comparisonTime);
 });
 
 maxButton.addEventListener("click", e => {
@@ -104,7 +104,7 @@ maxButton.addEventListener("click", e => {
     });
     const sob = calculateSumOfBest();
     segments[0].comparisonSegment = segments[0].bestSegment + comparisonTime - sob;
-    updateSplitTimes();
+    updateSplitTimes(comparisonTime);
 });
 
 minButton.addEventListener("click", e => {
@@ -114,14 +114,14 @@ minButton.addEventListener("click", e => {
     const sob = calculateSumOfBest();
     const lastSegment = segments[segments.length - 1];
     lastSegment.comparisonSegment = lastSegment.bestSegment + comparisonTime - sob;
-    updateSplitTimes();
+    updateSplitTimes(comparisonTime);
 });
 
 sobButton.addEventListener("click", e => {
     segments.forEach(segment => {
         segment.comparisonSegment = segment.bestSegment;
     });
-    updateSplitTimes();
+    updateSplitTimes(null);
 });
 
 percentButton.addEventListener("click", e => {
@@ -152,7 +152,7 @@ methodButtons.forEach(button => {
 decimalButtons.forEach(button => {
     button.addEventListener("change", e => {
         decimals = parseInt(e.target.value);
-        updateSplitTimes();
+        updateSplitTimes(null);
         segments.forEach(segment => {
             segment.slider.step = 10 ** (3 - decimals);
         });
@@ -165,7 +165,7 @@ timesaveButtons.forEach(button => {
         segments.forEach(segment => { 
             segment.slider.max = segment.bestSegment + timesave;
         });
-        updateSplitTimes();
+        updateSplitTimes(null);
     });
 });
 
@@ -259,7 +259,7 @@ function initializeCustomization() {
     }
 }
 
-function updateSplitTimes() {
+function updateSplitTimes(finalTime) {
     let total = 0;
     segments.forEach(segment => {
         if (segment.comparisonSegment == 0) {
@@ -273,15 +273,23 @@ function updateSplitTimes() {
             segment.slider.value = segment.comparisonSegment;
         }
     });
-    comparisonTime = total;
-    comparisonDiv.textContent = time(comparisonTime);
+    if (finalTime && finalTime > total) {
+        const lastSegment = segments[segments.length - 1];
+        lastSegment.comparisonSegment += finalTime - total;
+        lastSegment.splitTimeDiv.textContent = time(total);
+        lastSegment.comparisonDiv.textContent = time(lastSegment.comparisonSegment);
+        lastSegment.slider.value = lastSegment.comparisonSegment;
+    } else {
+        comparisonTime = total;
+        comparisonDiv.textContent = time(comparisonTime);
+    }
 }
 
 function percent(percentage) {
     segments.forEach(segment => {
         segment.comparisonSegment = Math.floor(segment.bestSegment * percentage);
     });
-    updateSplitTimes();
+    updateSplitTimes(null);
 }
 
 function calculateSumOfBest() {
@@ -400,7 +408,7 @@ class Segment {
         this.slider.addEventListener("input", e => {
             this.comparisonSegment = parseInt(this.slider.value);
             this.comparisonDiv.textContent = time(this.comparisonSegment);
-            callback();
+            callback(null);
         });
     }
 }
@@ -425,7 +433,7 @@ class Comparison {
                     segments[i].comparisonSegment = 0;
                 }
             }
-            updateSplitTimes();
+            updateSplitTimes(null);
         });
         comparisonsDiv.appendChild(this.button);
     }
