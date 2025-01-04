@@ -125,21 +125,21 @@ sobButton.addEventListener("click", e => {
 });
 
 percentButton.addEventListener("click", e => {
-    percent(1 + 0.001 * parseInt(percentSlider.value));
+    percent(1 + 0.0001 * parseInt(percentSlider.value));
 });
 
 percentSlider.addEventListener("input", e => {
     const percentage = parseInt(percentSlider.value);
     let displayed = percentage + "%";
-    while (displayed.length < 4) {
+    while (displayed.length < 5) {
         displayed = "0" + displayed;
     }
-    displayed = displayed.substring(0, 2) + "." + displayed.substring(2, 4);
+    displayed = displayed.substring(0, 2) + "." + displayed.substring(2, 5);
     if (displayed[0] == "0") {
-        displayed = displayed.substring(1, 5);
+        displayed = displayed.substring(1, 6);
     }
     percentButton.innerHTML = displayed;
-    percent(1 + 0.001 * percentage);
+    percent(1 + 0.0001 * percentage);
 });
 
 methodButtons.forEach(button => {
