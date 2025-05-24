@@ -141,15 +141,14 @@ button {
 }
 
 .left-panel {
-    flex: 0 1 35rem;
+    flex: 0 1 37rem;
     background-color: var(--background-color-panel);
     padding: 1rem 1.5rem;
     border: 1px solid var(--text-color);
 }
 
 .right-panel {
-    flex: 1 1 35rem;
-    max-width: 42rem;
+    flex: 0 1 42rem;
     background-color: var(--background-color-panel);
     padding: 1rem 1.5rem;
     border: 1px solid var(--text-color);
@@ -174,7 +173,7 @@ legend {
 }
 
 #percent-button {
-    width: 6rem;
+    width: 5rem;
 }
 
 #split-list {
@@ -208,4 +207,8 @@ legend {
     font-size: smaller;
     color: var(--accent-color);
     font-weight: 700;
+}
+
+#timesave-slider {
+    width: 50%;
 }

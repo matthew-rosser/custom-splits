@@ -50,32 +50,23 @@
                         </div>
                     </fieldset>
                     <fieldset class="radio-buttons">
-                        <legend>Slider Timesave</legend>
-                        <div>
-                            <input type="radio" id="ten" name="timesave" value="10000">
-                            <label for="ten">10 seconds</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="thirty" name="timesave" value="30000" checked>
-                            <label for="thirty">30 seconds</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="sixty" name="timesave" value="60000">
-                            <label for="sixty">60 seconds</label>
-                        </div>
+                        <legend>Timesave Range</legend>
+                        <input type="range" id="timesave-slider" min="1000" max="120000" step="1000" value="30000">
+                        <div id="timesave-div">30 seconds</div>
                     </fieldset>
                     <fieldset id="presets" class="buttons">
                         <legend>Presets</legend>
-                        <button id="equal">Equal Timesave</button>
-                        <button id="balanced">Duration Balanced</button>
-                        <button id="max">Maximum Delta</button>
-                        <button id="min">Minimum Delta</button>
-                        <button id="percent-button">5.00%</button>
-                        <input type="range" id="percent-slider" min="0" max="2500" step="1" value="500">
+                        <button id="uniform" title="Each segment has equal timesave">Uniform</button>
+                        <button id="length" title="Timesave is based on segment length">Length Balanced</button>
+                        <button id="half" title="Halfway between Uniform and Length Balanced">Half Balanced</button>
+                        <button id="max" title="All timesave is in the first segment">Max Delta</button>
+                        <button id="min" title="All timesave is in the last segment">Min Delta</button>
                     </fieldset>
                     <fieldset id="comparisons" class="buttons">
                         <legend>Comparisons</legend>
                         <button id="sob">Best Segments</button>
+                        <button id="percent-button">5.00%</button>
+                        <input type="range" id="percent-slider" min="0" max="2500" step="1" value="500">
                     </fieldset>
                 </div>
                 <div class="right-panel">

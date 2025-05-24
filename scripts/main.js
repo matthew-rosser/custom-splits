@@ -5,8 +5,9 @@ const uploadBox = document.getElementById("upload");
 const customization = document.getElementById("customization");
 const back = document.getElementById("back");
 const comparisonsDiv = document.getElementById("comparisons");
-const balancedButton = document.getElementById("balanced");
-const equalButton = document.getElementById("equal");
+const uniformButton = document.getElementById("uniform");
+const lengthButton = document.getElementById("length");
+const halfButton = document.getElementById("half");
 const maxButton = document.getElementById("max");
 const minButton = document.getElementById("min");
 const sobButton = document.getElementById("sob");
@@ -16,7 +17,8 @@ const real = document.getElementById("real");
 const game = document.getElementById("game");
 const methodButtons = document.querySelectorAll('input[name="method"]');
 const decimalButtons = document.querySelectorAll('input[name="decimal"]');
-const timesaveButtons = document.querySelectorAll('input[name="timesave"]');
+const timesaveSlider = document.getElementById("timesave-slider");
+const timesaveDiv = document.getElementById("timesave-div");
 const comparisonDiv = document.getElementById("comparison-time");
 const splitList = document.getElementById("split-list");
 const copy = document.getElementById("copy");
@@ -75,7 +77,7 @@ back.addEventListener("click", e => {
     timingMethod = "RealTime";
 });
 
-equalButton.addEventListener("click", e => {
+uniformButton.addEventListener("click", e => {
     const sob = calculateSumOfBest();
     segments.forEach(segment => {
         segment.comparisonSegment = segment.bestSegment 
@@ -84,7 +86,7 @@ equalButton.addEventListener("click", e => {
     updateSplitTimes(comparisonTime);
 });
 
-balancedButton.addEventListener("click", e => {
+lengthButton.addEventListener("click", e => {
     const sob = calculateSumOfBest();
     segments.forEach(segment => {
         if (sob == 0) {
@@ -93,6 +95,22 @@ balancedButton.addEventListener("click", e => {
             segment.comparisonSegment = segment.bestSegment 
                 + Math.floor((comparisonTime - sob) 
                 * (segment.bestSegment / sob));
+        }
+    });
+    updateSplitTimes(comparisonTime);
+});
+
+halfButton.addEventListener("click", e => {
+    const sob = calculateSumOfBest();
+    const equalRatio = 0.5;
+    segments.forEach(segment => {
+        if (sob == 0) {
+            segment.comparisonSegment = 0;
+        } else {
+            segment.comparisonSegment = segment.bestSegment 
+                + Math.floor((comparisonTime - sob) * (1 - equalRatio)
+                * (segment.bestSegment / sob))
+                + Math.floor((comparisonTime - sob) * equalRatio / segments.length);
         }
     });
     updateSplitTimes(comparisonTime);
@@ -159,14 +177,13 @@ decimalButtons.forEach(button => {
     });
 });
 
-timesaveButtons.forEach(button => {
-    button.addEventListener("change", e => {
-        timesave = parseInt(e.target.value);
-        segments.forEach(segment => { 
-            segment.slider.max = segment.bestSegment + timesave;
-        });
-        updateSplitTimes(null);
+timesaveSlider.addEventListener("input", e => {
+    timesave = parseInt(timesaveSlider.value);
+    segments.forEach(segment => { 
+        segment.slider.max = segment.bestSegment + timesave;
     });
+    updateSplitTimes(null);
+    timesaveDiv.innerHTML = Math.floor(timesave / 1000) + " second" + (timesave == 1000 ? "" : "s");
 });
 
 copy.addEventListener("click", e => {
@@ -435,6 +452,6 @@ class Comparison {
             }
             updateSplitTimes(null);
         });
-        comparisonsDiv.appendChild(this.button);
+        comparisonsDiv.insertBefore(this.button, percentButton);
     }
 }
